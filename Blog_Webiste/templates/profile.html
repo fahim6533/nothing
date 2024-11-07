@@ -1,0 +1,185 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Profile{% endblock title %}
+
+
+{% block content %}
+
+<section class="h-100 gradient-custom-2">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-9 col-xl-7">
+          <div class="card">
+            <div class="rounded-top text-white d-flex flex-row" style="background-color:orange; height:200px;">
+              <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
+                <img src="{{request.user.get_profile_picture}}"
+                  alt="Generic placeholder image" class="img-fluid img-thumbnail mt-4 mb-2"
+                  style="width: 150px; z-index: 1">
+
+
+
+                {% comment %} Edit Profile {% endcomment %}
+                <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter" data-mdb-ripple-color="dark"
+                  style="z-index: 1; width:170px">
+                  Change Profile Image
+                </button>
+                {% comment %} {% if messages %}
+                <div class="form-group">
+                  {% include "message.html" %}
+                </div>
+                {% endif %}
+                {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}
+                <div class="alert danger">
+                  {{error}}
+                </div>
+                {% endfor %}
+                {% endif %}  {% endcomment %}
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        </div>
+                        <div class="modal-body">
+                        
+                            <!-- Edit Form -->
+                        <form  action="{% url 'change_profile_picture'%}" method="POST">
+                          {% csrf_token %} 
+                            <div class="form-group">
+                                <input class="form-control" type="file" name="profile_images">
+                                
+                            </div>
+
+                            
+                            
+                          </div>
+                            <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            </div>
+
+                        </form>
+                        <!-- end Edit Form -->
+                        
+                        
+                    </div>
+                    </div>
+                </div>
+                {% comment %} end Edit Profile {% endcomment %}
+                
+
+
+
+              </div>
+              <div class="ms-3" style="margin-top: 130px; margin-left:10px;">
+                <h5>{{request.user.username}}</h5>
+                <p style="color: black;">{{request.user.email}}</p>
+              </div>
+            </div>
+            <div class="p-4 text-black" style="background-color: #f8f9fa;">
+              <div class="d-flex justify-content-end text-center py-1">
+                <div>
+                  <p class="mb-1 h5">{{request.user.user_blogs.all.count}}</p>
+                  <p class="small text-muted mb-0">Posts</p>
+                </div>
+                <div class="px-3">
+                  <p class="mb-1 h5">1026</p>
+                  <p class="small text-muted mb-0">Followers</p>
+                </div>
+                <div>
+                  <p class="mb-1 h5">478</p>
+                  <p class="small text-muted mb-0">Following</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-4" style="background-color: #00aaf8f3; padding-top: 5px;">
+              <button  class="btn btn-primary"><a style="color: white;" href="{% url 'my_blogs'%}">My Blogs</a></button>
+              
+              <button class="btn btn-primary"><a style="color: white;" href="{% url 'add_blog'%}">Add Blogs</a></button>
+           </div>
+
+
+            <div class="card-body p-4 text-black">
+              
+              <div class="mb-5">
+
+
+
+                
+            
+
+                {% comment %} profile info {% endcomment %}
+                <div class="p-4" style="background-color: #f8f9fa;">
+                   <!-- Edit Form -->
+                   <form  action="{% url 'profile'%}" method="POST">
+                    {% csrf_token %} 
+                      <div class="form-group">
+                          <input class="form-control" type="file" name="profile_images">
+                          
+                      </div>
+
+                      <div class="form-group">
+                          <!-- <label style="color: black;" class="edit_form_label" for="firstname">First Name</label> -->
+                          <input placeholder="First Name" type="text" class="form-control" name="first_name" value="{{account.first_name}}">
+                          <p class="text-danger error py-1">{{account.firstt_name.errors}}</p>
+                        </div>
+
+                      <div class="form-group">
+                          <!-- <label class="edit_form_label" for="lastname">Last Name</label> -->
+                          <input placeholder="Last Name" type="text" class="form-control" name="last_name" value="{{account.last_name}}">
+                          <p class="text-danger error py-1">{{account.firstt_name.errors}}</p>
+                      </div>
+
+                      <div class="form-group">
+                          <!-- <label for="username">User Name</label> -->
+                          <input placeholder="User Nmae" type="text" class="form-control" name="user_name" value="{{account.username}}">
+                          <p class="text-danger error py-1">{{account.firstt_name.errors}}</p>
+                      </div>
+
+                      <div class="form-group">
+                          <!-- <label class="edit_form_label" for="email">Email</label> -->
+                          <input placeholder="Email" type="email" class="form-control" name="email" value="{{account.email}}">
+                          <p class="text-danger error py-1">{{account.firstt_name.errors}}</p>
+                      </div>
+
+                      <div class="form-group">
+                          <input placeholder="Old Password" type="text" class="form-control" name="password" value="">
+                      </div>
+
+                      <div class="form-group">
+                          <input placeholder="New Password" type="text" class="form-control" name="new_password" value="">
+                      </div>
+
+                      <div class="form-group">
+                          <input placeholder="Confirm Password" type="text" class="form-control" name="confim_password" value="">
+                      </div>
+                      
+                    </div>
+                      <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-primary">Save changes</button>
+                      </div>
+
+                  </form>
+                  <!-- end Edit Form -->
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+  
+
+{% endblock content %}

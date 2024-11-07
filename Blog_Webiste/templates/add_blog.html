@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Add Blog{% endblock title %}
+
+{% block content %}
+
+<section>
+    <div class="container">
+        <div class="row py-5 justify-content-center">
+            <div class="col-md-8">
+                <form action="" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+{% comment %} 
+                    {% if messsages %}
+                    <div class="form-group">
+                        {% include "message.html" %}
+                     </div>
+                    {% endif %} {% endcomment %}
+
+
+
+                    <div class="form-group">
+                        <p class="text-danger">{{form.title.errors}}</p>
+                        <input class="form-control" name="title" type="text" placeholder="Title">
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-danger">{{form.category.errors}}</p>
+                        <label for="">Categroy</label>
+                        <select class="form-control" name="category" id="categroy_id">
+                            {% for category in categories%}
+                            <option value="{{category.id}}">{{category.title}}</option>
+                            {% endfor %}
+                        </select>
+                        
+                    </div>
+
+                    <div class="form-group"><p class="text-danger">{{form.banner.errors}}</p>
+                       <input class="form-control" type="file" name="banner" id="">
+                    </div>
+
+                    <div class="form-group"><p class="text-danger">{{form.description.errors}}</p>
+                        <textarea class="form-control" name="description" id="" cols="30" rows="10" placeholder="Description"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <p class="text-danger">{{form.tags.errors}}</p>
+                        <textarea class="form-control" name="tags" id="" cols="30" rows="10" placeholder="tags"></textarea>
+                    </div>
+
+                    <div class="form-group my-2">
+                        <button class="btn btn-primary btn-block" type="submit">Add</button>
+                    </div>
+                
+                
+                
+                
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock content %}
+
